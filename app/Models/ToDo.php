@@ -4,17 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Table('users')]
+#[Table('to_dos')]
 #[Fillable([
-    'username',
-    'first_name',
-    'last_name',
+    'project_id',
+    'description',
+    'done',
 ])]
-class User extends Model
+class ToDo extends Model
 {
     use HasUuids;
 
@@ -26,12 +26,14 @@ class User extends Model
 
     protected function casts(): array
     {
-        return ['created_at' => 'datetime'];
+        return [
+            'done' => 'boolean',
+            'created_at' => 'datetime',
+        ];
     }
 
-    /* @return HasMany<Project> */
-    public function getProjects(): HasMany
+    public function project(): BelongsTo
     {
-        return $this->hasMany(Project::class);
+        return $this->belongsTo(Project::class);
     }
 }
