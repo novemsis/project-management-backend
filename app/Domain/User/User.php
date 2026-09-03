@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Models;
+namespace App\Domain\User;
 
+use App\Domain\Project\Project;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Table('plans')]
+#[Table('users')]
 #[Fillable([
-    'project_id',
-    'strategic_definition',
-    'tactical_definition',
-    'operational_definition',
+    'username',
+    'first_name',
+    'last_name',
 ])]
-class Plan extends Model
+class User extends Model
 {
     use HasUuids;
 
@@ -27,13 +27,12 @@ class Plan extends Model
 
     protected function casts(): array
     {
-        return [
-            'created_at' => 'datetime',
-        ];
+        return ['created_at' => 'datetime'];
     }
 
-    public function project(): BelongsTo
+    /* @return HasMany<Project> */
+    public function getProjects(): HasMany
     {
-        return $this->belongsTo(Project::class);
+        return $this->hasMany(Project::class);
     }
 }

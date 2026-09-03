@@ -1,11 +1,16 @@
 <?php
 
-namespace App\Models;
+namespace App\Domain\Project;
 
+use App\Domain\Decision;
+use App\Domain\PerformedCheck;
+use App\Domain\Plan;
+use App\Domain\Target;
+use App\Domain\ToDo;
+use App\Domain\User\User;
 use Illuminate\Database\Eloquent\Attributes\Table;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;

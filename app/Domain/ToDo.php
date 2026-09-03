@@ -1,20 +1,21 @@
 <?php
 
-namespace App\Models;
+namespace App\Domain;
 
+use App\Domain\Project\Project;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Table('decisions')]
+#[Table('to_dos')]
 #[Fillable([
     'project_id',
-    'carry_through',
     'description',
+    'done',
 ])]
-class Decision extends Model
+class ToDo extends Model
 {
     use HasUuids;
 
@@ -27,7 +28,7 @@ class Decision extends Model
     protected function casts(): array
     {
         return [
-            'carry_through' => 'boolean',
+            'done' => 'boolean',
             'created_at' => 'datetime',
         ];
     }

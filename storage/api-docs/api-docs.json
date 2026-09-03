@@ -1,0 +1,70 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "VisionFlow",
+        "description": "API documentation",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api",
+            "description": "app backend"
+        }
+    ],
+    "paths": {
+        "/project/create": {
+            "post": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "create a new project",
+                "operationId": "getProjects",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Mein Projekt"
+                                    },
+                                    "project_start": {
+                                        "description": "Date format: YYYY-mm-dd",
+                                        "type": "string",
+                                        "example": "2026-01-31"
+                                    },
+                                    "project_end": {
+                                        "description": "Date format: YYYY-mm-dd",
+                                        "type": "string",
+                                        "example": "2026-01-31"
+                                    },
+                                    "check_period": {
+                                        "description": "Date Period",
+                                        "type": "App\\Global\\DatePeriod",
+                                        "example": "p1d"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Project created"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Projects",
+            "description": "Projects"
+        }
+    ]
+}

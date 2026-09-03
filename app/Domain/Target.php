@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Domain;
 
+use App\Domain\Project\Project;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
