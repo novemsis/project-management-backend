@@ -1,8 +1,13 @@
 <?php
 
-namespace App\Domain;
+namespace App\Domain\Check;
 
+use App\Domain\Decision\Decision;
+use App\Domain\Plan\Plan;
 use App\Domain\Project\Project;
+use App\Domain\Target\Target;
+use App\Domain\ToDo\ToDo;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -10,6 +15,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * @property Carbon $created_at
+ */
 #[Table('performed_checks')]
 #[Fillable([
     'project_id',

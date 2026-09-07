@@ -1,22 +1,29 @@
 <?php
 
-namespace App\Domain;
+namespace App\Domain\ToDo;
 
 use App\Domain\Project\Project;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Ramsey\Uuid\Uuid;
 
-#[Table('plans')]
+/**
+ * @property string $id
+ * @property string $description
+ * @property Carbon $created_at
+ * @property bool $done
+ */
+#[Table('to_dos')]
 #[Fillable([
     'project_id',
-    'strategic_definition',
-    'tactical_definition',
-    'operational_definition',
+    'description',
+    'done',
 ])]
-class Plan extends Model
+class ToDo extends Model
 {
     use HasUuids;
 
@@ -29,6 +36,7 @@ class Plan extends Model
     protected function casts(): array
     {
         return [
+            'done' => 'boolean',
             'created_at' => 'datetime',
         ];
     }

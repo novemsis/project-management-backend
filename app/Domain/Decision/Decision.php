@@ -1,21 +1,29 @@
 <?php
 
-namespace App\Domain;
+namespace App\Domain\Decision;
 
 use App\Domain\Project\Project;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Ramsey\Uuid\Uuid;
 
-#[Table('to_dos')]
+/**
+ * @property string $id
+ * @property Carbon $created_at
+ * @property bool $carry_through
+ * @property string|null $description
+ */
+#[Table('decisions')]
 #[Fillable([
     'project_id',
+    'carry_through',
     'description',
-    'done',
 ])]
-class ToDo extends Model
+class Decision extends Model
 {
     use HasUuids;
 
@@ -28,7 +36,7 @@ class ToDo extends Model
     protected function casts(): array
     {
         return [
-            'done' => 'boolean',
+            'carry_through' => 'boolean',
             'created_at' => 'datetime',
         ];
     }

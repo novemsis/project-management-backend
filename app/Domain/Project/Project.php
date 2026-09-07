@@ -2,20 +2,39 @@
 
 namespace App\Domain\Project;
 
-use App\Domain\Decision;
-use App\Domain\PerformedCheck;
-use App\Domain\Plan;
-use App\Domain\Target;
-use App\Domain\ToDo;
+use App\Domain\Check\PerformedCheck;
+use App\Domain\Decision\Decision;
+use App\Domain\Plan\Plan;
+use App\Domain\Target\Target;
+use App\Domain\ToDo\ToDo;
 use App\Domain\User\User;
+use App\Global\DatePeriod;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Ramsey\Uuid\Uuid;
 
+/**
+ * @property string $id
+ * @property string $title
+ * @property Carbon|null $project_start
+ * @property Carbon|null $project_end
+ * @property DatePeriod|null $check_period
+ * @property Carbon $created_at
+ */
 #[Table('projects')]
+#[Fillable([
+    'user_id',
+    'title',
+    'project_start',
+    'project_end',
+    'check_period',
+])]
 class Project extends Model
 {
     use HasUuids;
@@ -29,8 +48,7 @@ class Project extends Model
         return [
             'project_start' => 'datetime',
             'project_end' => 'datetime',
-            'created_at' => 'datetime',
-            'updated_at' => 'datetime',
+            'check_period' => DatePeriod::class,
         ];
     }
 
@@ -39,10 +57,15 @@ class Project extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function latestPerformedCheck(): HasOne
+    public function performedChecks(): HasMany
     {
-        return $this->hasOne(PerformedCheck::class)
-            ->latestOfMany('created_at');
+        return $this->hasMany(PerformedCheck::class);
+    }
+
+
+    public function latestPerformedCheck(): ?PerformedCheck
+    {
+        return $this->performedChecks()->latest()->first();
     }
 
     public function targets(): HasMany {
@@ -51,8 +74,8 @@ class Project extends Model
 
     public function currentTarget(): ?Target
     {
-        return $this->latestPerformedCheck?->target
-            ?? $this->targets()->first();
+        return $this->latestPerformedCheck()?->target
+            ?? $this->targets()->latest()->first();
     }
 
     public function plans(): HasMany {
@@ -61,8 +84,8 @@ class Project extends Model
 
     public function currentPlan(): ?Plan
     {
-        return $this->latestPerformedCheck?->plan
-            ?? $this->plans()->first();
+        return $this->latestPerformedCheck()?->plan
+            ?? $this->plans()->latest()->first();
     }
 
     public function decisions(): HasMany {
@@ -71,17 +94,18 @@ class Project extends Model
 
     public function currentDecision(): ?Decision
     {
-        return $this->latestPerformedCheck?->decision
-            ?? $this->decisions()->first();
+        return $this->latestPerformedCheck()?->decision
+            ?? $this->decisions()->latest()->first();
     }
 
     public function toDos(): HasMany {
         return $this->hasMany(ToDo::class);
     }
 
-    public function currentToDos()
+    /** @return Collection<int, ToDo> */
+    public function currentToDos(): Collection
     {
-        return $this->latestPerformedCheck?->toDos
-            ?? $this->toDos;
+        return $this->latestPerformedCheck()?->toDos
+            ?? $this->toDos()->get();
     }
 }

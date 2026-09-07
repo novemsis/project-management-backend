@@ -1,0 +1,31 @@
+### POST request for creating a new project
+POST http://localhost:8000/api/project/create
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer 1|3SiMCF72zdBgvps0K59M9lvJijzaeFrV97Qqu8GLec9ca1e0
+
+{
+    "title": "first Project",
+    "project_start": "2026-09-07",
+    "project_end": "2026-09-10",
+    "check_period": "P1D",
+    "target_definition": "bli",
+    "plan_strategic_definition": "bla",
+    "plan_tactical_definition": "blub",
+    "plan_operational_definition": "foo",
+    "decision_carry_through": true,
+    "decision_description": "bar",
+    "to_dos": [
+        {
+            "description": "zu sport gehen"
+        }
+    ]
+}
+
+### GET request for getting all projects for a given user
+GET http://localhost:8000/api/project/get-all
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer 1|3SiMCF72zdBgvps0K59M9lvJijzaeFrV97Qqu8GLec9ca1e0
+
+###

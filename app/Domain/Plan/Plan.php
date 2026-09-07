@@ -1,21 +1,31 @@
 <?php
 
-namespace App\Domain;
+namespace App\Domain\Plan;
 
 use App\Domain\Project\Project;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Ramsey\Uuid\Uuid;
 
-#[Table('decisions')]
+/**
+ * @property string $id
+ * @property Carbon $created_at
+ * @property string|null $strategic_definition
+ * @property string|null $tactical_definition
+ * @property string|null $operational_definition
+ */
+#[Table('plans')]
 #[Fillable([
     'project_id',
-    'carry_through',
-    'description',
+    'strategic_definition',
+    'tactical_definition',
+    'operational_definition',
 ])]
-class Decision extends Model
+class Plan extends Model
 {
     use HasUuids;
 
@@ -28,7 +38,6 @@ class Decision extends Model
     protected function casts(): array
     {
         return [
-            'carry_through' => 'boolean',
             'created_at' => 'datetime',
         ];
     }
