@@ -8,6 +8,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('/project')->group(function () {
         Route::post('/create', [ProjectController::class, 'createProject']);
         Route::get('/get-all', [ProjectController::class, 'getProjects']);
+        Route::get('/{projectId}', [ProjectController::class, 'getProject']);
     });
     Route::prefix('/user')->group(function () {
         Route::get('/logout', [UserController::class, 'logout']);

@@ -28,4 +28,10 @@ Content-Type: application/json
 Accept: application/json
 Authorization: Bearer 1|3SiMCF72zdBgvps0K59M9lvJijzaeFrV97Qqu8GLec9ca1e0
 
+### GET request for getting one project for a given user
+GET http://localhost:8000/api/project/01a07b87-52c6-732c-9276-89fcaddc8606
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer 23|FwxHqzvXK5PHNeCzF4426pfKCNatrGPJYrX1YLiw6b079f29
+
 ###

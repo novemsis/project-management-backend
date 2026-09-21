@@ -12,4 +12,9 @@ class ProjectService
     {
         return Project::query()->where('user_id', $user->id)->get();
     }
+
+    public function getProject(User $user, String $projectId): ?Project
+    {
+        return Project::query()->where('user_id', $user->id)->where('id', $projectId)->first();
+    }
 }
