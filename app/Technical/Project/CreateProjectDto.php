@@ -16,6 +16,7 @@ class CreateProjectDto extends Data
     /** @param CreateProjectTodoDto[] $toDos */
     public function __construct(
         public string $title,
+        public ?string $description,
         #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d')]
         public ?Carbon $projectStart = null,
         #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d')]
@@ -35,6 +36,11 @@ class CreateProjectDto extends Data
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
     }
 
     public function getProjectStart(): ?Carbon

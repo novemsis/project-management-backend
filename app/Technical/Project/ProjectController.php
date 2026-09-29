@@ -55,6 +55,7 @@ class ProjectController extends Controller
             $project = new Project([
                 'user_id' => $user->id,
                 'title' => $projectDto->getTitle(),
+                'description' => $projectDto->getDescription(),
                 'project_start' => $projectDto->getProjectStart(),
                 'project_end' => $projectDto->getProjectEnd(),
                 'check_period' => $projectDto->getCheckPeriod(),
@@ -91,6 +92,7 @@ class ProjectController extends Controller
             $result[$project->id] = [
                 'id' => $project->id,
                 'title' => $project->title,
+                'description' => $project->description,
                 'project_start' => $project->project_start,
                 'project_end' => $project->project_end,
                 'created_at' => $project->created_at,
@@ -137,6 +139,7 @@ class ProjectController extends Controller
         $result = [
             'id' => $project->id,
             'title' => $project->title,
+            'description' => $project->description,
             'project_start' => $project->project_start,
             'project_end' => $project->project_end,
             'created_at' => $project->created_at,

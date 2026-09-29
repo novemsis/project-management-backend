@@ -17,11 +17,11 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Ramsey\Uuid\Uuid;
 
 /**
  * @property string $id
  * @property string $title
+ * @property string|null $description
  * @property Carbon|null $project_start
  * @property Carbon|null $project_end
  * @property DatePeriod|null $check_period
@@ -31,6 +31,7 @@ use Ramsey\Uuid\Uuid;
 #[Fillable([
     'user_id',
     'title',
+    'description',
     'project_start',
     'project_end',
     'check_period',
