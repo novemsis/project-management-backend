@@ -49,17 +49,18 @@ class ProjectController extends Controller
         tags: ['Projects'],
         responses: [new OA\Response(response: 204, description: 'Project created')]
     )]
-    public function createProject(Request $request, CreateProjectDto $projectDto): Response {
+    public function createProject(Request $request, CreateProjectDto $projectDto): JsonResponse
+    {
         $user = $request->user();
-        DB::transaction(function() use ($user, $projectDto) {
-            $project = new Project([
-                'user_id' => $user->id,
-                'title' => $projectDto->getTitle(),
-                'description' => $projectDto->getDescription(),
-                'project_start' => $projectDto->getProjectStart(),
-                'project_end' => $projectDto->getProjectEnd(),
-                'check_period' => $projectDto->getCheckPeriod(),
-            ]);
+        $project = new Project([
+            'user_id' => $user->id,
+            'title' => $projectDto->getTitle(),
+            'description' => $projectDto->getDescription(),
+            'project_start' => $projectDto->getProjectStart(),
+            'project_end' => $projectDto->getProjectEnd(),
+            'check_period' => $projectDto->getCheckPeriod(),
+        ]);
+        DB::transaction(function() use ($user, $projectDto, $project) {
             $project->save();
 
             $this->targetService->createTarget($project, $projectDto->getTargetDefinition());
@@ -79,7 +80,9 @@ class ProjectController extends Controller
             );
         });
 
-        return response()->noContent();
+        return response()->json([
+            'id' => $project->id,
+        ]);
     }
 
     public function getProjects(Request $request): Response|JsonResponse
